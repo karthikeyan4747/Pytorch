@@ -38,8 +38,12 @@ X_TRAIN,X_TEST,Y_TRAIN,Y_TEST = train_test_split(X,Y,test_size=0.2,random_state=
 
 # Replicate CircleModelV0 with nn.Sequential
 model = nn.Sequential(
-    nn.Linear(in_features=2, out_features=5),
-    nn.Linear(in_features=5, out_features=1)
+    nn.Linear(in_features=2, out_features=128),
+    nn.ReLU(),
+    nn.Linear(in_features=128,out_features=5),
+    nn.ReLU(),
+    nn.Linear(in_features=5, out_features=1),
+    nn.ReLU()
 ).to(device)
 
 with torch.inference_mode():
@@ -48,7 +52,7 @@ with torch.inference_mode():
 
 loss_fn = nn.BCEWithLogitsLoss()
 
-optimizer = torch.optim.SGD(params=model.parameters(),lr=0.01)
+optimizer = torch.optim.SGD(params=model.parameters(),lr=0.1)
 
 def accuracy_fn(y_true,y_pred):
     correct = torch.eq(y_true,y_pred).sum().item()

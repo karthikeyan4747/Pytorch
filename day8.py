@@ -2,6 +2,13 @@ import torch
 import helper_functions
 import matplotlib.pyplot as plt
 import torch.nn as nn
+from sklearn.datasets import make_circles
+
+n_samples = 1000
+
+X,y = make_circles(noise=0.03,n_samples=1000,random_state=42)
+
+plt.scatter(X[:,0],X[:,1],c=y,cmap = plt.cm.RdBu)
 
 torch.manual_seed(42)
 
@@ -35,7 +42,7 @@ model = nn.Sequential(
 
 loss_fn = nn.L1Loss()
 
-optimizer = torch.optim.SGD(params=model.parameters(),lr=0.01)
+optimizer = torch.optim.SGD(params=model.parameters(),lr=0.1)
 
 epochs = 1000
 
